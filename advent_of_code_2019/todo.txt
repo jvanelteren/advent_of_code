@@ -1,0 +1,20 @@
+
+learn z3 solver
+https://codeforces.com/blog/entry/72593
+animate day 13
+tryout partial on day 19 for the binary search
+reading https://nbviewer.jupyter.org/github/mjpieters/adventofcode/blob/master/2019/Day%2024.ipynb
+numpy indexing https://docs.scipy.org/doc/numpy-1.13.0/reference/arrays.indexing.html
+graphing with PIL
+maze pathfinding
+ matplotlib animation.FuncAnimation                         animation.ArtistAnimation
+ beamsearch for moties project voor betere moties
+ 
+ 
+ 
+ 2016
+ 2016 day 11, learnings in cod, possible make into tuples
+
+ 
+todo day 5 visualize in terminal
+todo update a star algo in utils lib

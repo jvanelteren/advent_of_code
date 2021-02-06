@@ -1,0 +1,8 @@
+setup.py
+aoc/__init__.py
+aoc/test.py
+aoc.egg-info/PKG-INFO
+aoc.egg-info/SOURCES.txt
+aoc.egg-info/dependency_links.txt
+aoc.egg-info/not-zip-safe
+aoc.egg-info/top_level.txt

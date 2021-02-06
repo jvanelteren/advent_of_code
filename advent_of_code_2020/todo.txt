@@ -1,0 +1,2 @@
+make day 11 into a GameofLife class
+study day 19 what could be improved also with parsing (CLF or something)

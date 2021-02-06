@@ -1,0 +1,6 @@
+# git rm --cached **/input.txt to remove files already committed
+./input.txt
+.input.txt
+**./input.txt
+**./**/.input.txt
+**/**/input.txt
