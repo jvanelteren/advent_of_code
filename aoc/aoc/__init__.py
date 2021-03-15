@@ -313,7 +313,7 @@ def conv1d(arr,conv_shape,mode='same',padding=None,pad_dir='center') ->list:
     else: # even conv_shape
         return [arr[i:i+conv_shape] for i in range(0,len(arr)-conv_shape+1)]
 
-# assert neighbors1d("12345",3,mode='valid' == ['123', '234', '345'])
+# assert conv1d("12345",3,mode='valid' == ['123', '234', '345'])
 
 
 #%%
@@ -380,12 +380,6 @@ def neighbors(i, diag = True,inc_self=False):
         if inc_self: res.add(i)
         return res
 
-# 4 and 5 tuples
-# assert neighbors((0,0), inc_self=False, diag=False) == {(0, 1), (0, -1), (1, 0), (-1, 0)}
-# assert neighbors((0,0), inc_self=True, diag=False) == {(0, 1), (0, -1), (1, 0), (-1, 0), (0, 0)}
-# # 8 and 9 tuples
-# assert neighbors((0,0), inc_self=False, diag=True) == {(-1, -1), (-1, 0), (-1, 1), (0, -1), (0, 1), (1, -1), (1, 0), (1, 1)}
-# assert neighbors((0,0), inc_self=True, diag=True) == {(1, 1), (1, -1), (1, 0), (0, 1), (0, -1), (0, 0), (-1, 1), (-1, -1), (-1, 0)}
 
 
 import numpy as np
@@ -442,15 +436,7 @@ def arr_neighbors(arr, diag=True, inc_self=False):
 
 # res = {(here-set([a,b]),there|set([a,b],1)):(set(a,b),'->') for a in here for b in here}
 # # %%
-from pathlib import Path
-def untar_data(path, save_dir = None):
-    # will untar a file to save dir or the directory of path
-    if isinstance(path,Path):
-        tar = open(path)
-        tar.extractall(save_dir) if save_dir else tar.extractall(path.parent)
-        tar.close()
-    else:
-        print('argument should be Path instance')
+
 
 import logging
 import contextlib

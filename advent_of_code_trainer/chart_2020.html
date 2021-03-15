@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    .error {
+        color: red;
+    }
+  </style>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm//vega@5"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm//vega-lite@4.8.1"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm//vega-embed@6"></script>
+</head>
+<body>
+  <div id="vis"></div>
+  <script>
+    (function(vegaEmbed) {
+      var spec = {"config": {"view": {"continuousWidth": 400, "continuousHeight": 300}}, "hconcat": [{"layer": [{"mark": "point", "encoding": {"x": {"type": "quantitative", "field": "personal", "scale": {"domain": [0, 200]}}, "y": {"type": "quantitative", "field": "leaderboard", "scale": {"domain": [0, 60]}}}, "height": 600, "title": "Performance on first star 2020", "width": 600}, {"mark": {"type": "text", "align": "left", "baseline": "middle", "dx": 7}, "encoding": {"text": {"type": "quantitative", "field": "label"}, "x": {"type": "quantitative", "field": "personal", "scale": {"domain": [0, 200]}}, "y": {"type": "quantitative", "field": "leaderboard", "scale": {"domain": [0, 60]}}}, "height": 600, "title": "Performance on first star 2020", "width": 600}], "data": {"name": "data-f09282ca263bf5be82dc080c9c8ab350"}}, {"layer": [{"mark": "point", "encoding": {"x": {"type": "quantitative", "field": "personal", "scale": {"domain": [0, 200]}}, "y": {"type": "quantitative", "field": "leaderboard", "scale": {"domain": [0, 60]}}}, "height": 600, "title": "Performance on both stars 2020", "width": 600}, {"mark": {"type": "text", "align": "left", "baseline": "middle", "dx": 7}, "encoding": {"text": {"type": "quantitative", "field": "label"}, "x": {"type": "quantitative", "field": "personal", "scale": {"domain": [0, 200]}}, "y": {"type": "quantitative", "field": "leaderboard", "scale": {"domain": [0, 60]}}}, "height": 600, "title": "Performance on both stars 2020", "width": 600}], "data": {"name": "data-bf5b9bb80efdf2a325dec6b82fb39c8c"}}], "$schema": "https://vega.github.io/schema/vega-lite/v4.8.1.json", "datasets": {"data-f09282ca263bf5be82dc080c9c8ab350": [{"personal": 7, "leaderboard": 7, "label": 1}, {"personal": 8, "leaderboard": 3, "label": 2}, {"personal": 8, "leaderboard": 3, "label": 3}, {"personal": 8, "leaderboard": 4, "label": 4}, {"personal": 10, "leaderboard": 4, "label": 5}, {"personal": 4, "leaderboard": 2, "label": 6}, {"personal": 13, "leaderboard": 9, "label": 7}, {"personal": 9, "leaderboard": 3, "label": 8}, {"personal": 6, "leaderboard": 3, "label": 9}, {"personal": 8, "leaderboard": 4, "label": 10}, {"personal": 14, "leaderboard": 9, "label": 11}, {"personal": 40, "leaderboard": 5, "label": 12}, {"personal": 7, "leaderboard": 4, "label": 13}, {"personal": 39, "leaderboard": 7, "label": 14}, {"personal": 20, "leaderboard": 6, "label": 15}, {"personal": 30, "leaderboard": 7, "label": 16}, {"personal": 52, "leaderboard": 10, "label": 17}, {"personal": 36, "leaderboard": 9, "label": 18}, {"personal": 325, "leaderboard": 14, "label": 19}, {"personal": 179, "leaderboard": 15, "label": 20}, {"personal": 16, "leaderboard": 11, "label": 21}, {"personal": 12, "leaderboard": 4, "label": 22}, {"personal": 53, "leaderboard": 11, "label": 23}, {"personal": 23, "leaderboard": 7, "label": 24}, {"personal": 17, "leaderboard": 7, "label": 25}], "data-bf5b9bb80efdf2a325dec6b82fb39c8c": [{"personal": 8, "leaderboard": 8, "label": 1}, {"personal": 15, "leaderboard": 5, "label": 2}, {"personal": 13, "leaderboard": 5, "label": 3}, {"personal": 31, "leaderboard": 13, "label": 4}, {"personal": 15, "leaderboard": 6, "label": 5}, {"personal": 10, "leaderboard": 5, "label": 6}, {"personal": 27, "leaderboard": 14, "label": 7}, {"personal": 16, "leaderboard": 8, "label": 8}, {"personal": 11, "leaderboard": 6, "label": 9}, {"personal": 47, "leaderboard": 9, "label": 10}, {"personal": 44, "leaderboard": 14, "label": 11}, {"personal": 52, "leaderboard": 11, "label": 12}, {"personal": 65, "leaderboard": 16, "label": 13}, {"personal": 75, "leaderboard": 16, "label": 14}, {"personal": 126, "leaderboard": 9, "label": 15}, {"personal": 55, "leaderboard": 21, "label": 16}, {"personal": 55, "leaderboard": 13, "label": 17}, {"personal": 75, "leaderboard": 14, "label": 18}, {"personal": 402, "leaderboard": 29, "label": 19}, {"personal": 246, "leaderboard": 74, "label": 20}, {"personal": 19, "leaderboard": 16, "label": 21}, {"personal": 44, "leaderboard": 21, "label": 22}, {"personal": 354, "leaderboard": 40, "label": 23}, {"personal": 76, "leaderboard": 15, "label": 24}, {"personal": 17, "leaderboard": 8, "label": 25}]}};
+      var embedOpt = {"mode": "vega-lite"};
+
+      function showError(el, error){
+          el.innerHTML = ('<div class="error" style="color:red;">'
+                          + '<p>JavaScript Error: ' + error.message + '</p>'
+                          + "<p>This usually means there's a typo in your chart specification. "
+                          + "See the javascript console for the full traceback.</p>"
+                          + '</div>');
+          throw error;
+      }
+      const el = document.getElementById('vis');
+      vegaEmbed("#vis", spec, embedOpt)
+        .catch(error => showError(el, error));
+    })(vegaEmbed);
+
+  </script>
+</body>
+</html>

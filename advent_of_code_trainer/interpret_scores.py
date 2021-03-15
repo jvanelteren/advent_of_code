@@ -5,7 +5,7 @@ import altair as alt
 import pandas as pd
 
 # The display part needs two files: scores_leaderboard_YEAR.txt and scores_personal_YEAR.txt which you need to make yourself
-YEAR = 2017 # adapt to the year you're competing
+YEAR = 2020 # adapt to the year you're competing
 
 f= open('personal_scores/scores_personal_'+str(YEAR)+'.txt','r')
 scores = [line.rstrip().split(',') for line in f]
@@ -55,3 +55,5 @@ text_star2 = points_star2.mark_text(
 )
 ((points_star1 + text_star1) | (points_star2 + text_star2)).save('chart_'+str(YEAR)+'.html')
 
+
+# %%
