@@ -242,3 +242,5 @@ def prev(i):
     return (base+gold*i)%l
 
 prev(12139369866491111222698357067)
+
+# %%
