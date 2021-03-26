@@ -81,8 +81,9 @@ class Comp():
         if self.verbose: print(f'reg {a} is now {self.reg[a]}')
 
     def gt(self, args):
-        print('gt not implemented')
-        sys.exit()
+        # set <a> to 1 if <b> is greater than <c>; set it to 0 otherwise
+        a,b,c = args
+        self.reg[a] = 1 if b > c else 0
 
     def jmp(self, args):
         return args[0]
@@ -109,16 +110,19 @@ class Comp():
         sys.exit()
 
     def func_and(self, args):
-        print('and not implemented')
-        sys.exit()
+        # stores into <a> the bitwise and of <b> and <c>
+        a, b, c = args
+        self.reg[a] = b & c
 
     def func_or(self, args):
-        print('or not implemented')
-        sys.exit()
+        # stores into <a> the bitwise or of <b> and <c>
+        a, b, c = args
+        self.reg[a] = b | c
 
     def func_not(self, args):
-        print('not not implemented')
-        sys.exit()
+        # stores 15-bit bitwise inverse of <b> in <a>
+        a, b = args
+        self.reg[a] = (~ b) % self.M
 
     def rmem(self, args):
         print('rmem not implemented')
