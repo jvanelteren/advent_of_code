@@ -15,11 +15,11 @@ tar.close()
 
 
 import numpy as np
+# %%
 f = open('challenge.bin', 'rb')
 ins = np.fromfile(f, dtype=np.uint16)
 
 
-# %%
 class Comp():
     def __init__(self, ins, verbose=False):
         self.pnt = 0
@@ -41,7 +41,7 @@ class Comp():
             13 : (self.func_or, 1,2),
             14 : (self.func_not, 1,1),
             15 : (self.rmem, 1,1),
-            16 : (self.wmem, 1,1),
+            16 : (self.wmem, 0,2),
             17 : (self.call, 0,1),
             18 : (self.ret, 0,0),
             19: (self.out,0,1),
@@ -102,12 +102,14 @@ class Comp():
         self.reg[a] = (b + c) % self.M
 
     def mult(self, args):
-        print('mult not implemented')
-        sys.exit()
+        # assign into <a> the product of <b> and <c> (modulo 32768)
+        a, b, c = args
+        self.reg[a] = (b * c) % self.M
 
     def mod(self, args):
-        print('mod not implemented')
-        sys.exit()
+        # store into <a> the remainder of <b> divided by <c>
+        a, b, c = args
+        self.reg[a] = (b % c) % self.M
 
     def func_and(self, args):
         # stores into <a> the bitwise and of <b> and <c>
@@ -125,22 +127,27 @@ class Comp():
         self.reg[a] = (~ b) % self.M
 
     def rmem(self, args):
-        print('rmem not implemented')
-        sys.exit()
+        #   read memory at address <b> and write it to <a>
+        a , b = args
+        self.reg[a] = self.ins[b]
 
     def wmem(self, args):
-        print('wmem not implemented')
-        sys.exit()
+        #   write the value from <b> into memory at address <a>
+        a , b = args
+        self.ins[a] = b
 
     def call(self, args):
-        print('call not implemented')
-        sys.exit()
+        self.stack.append(self.pnt)
+        return args[0]
 
     def ret(self, args):
-        print('ret not implemented')
-        sys.exit()
+        # remove the top element from the stack and jump to it; empty stack = halt
+        return self.stack.pop()
+
 
     def out(self,args):
+        print('out not implemented')
+        sys.exit()
         print(chr(args[0]), end='')
 
     def func_in(self, args):
@@ -165,6 +172,7 @@ class Comp():
         pnt += num_write
         args += tuple(ins[pnt+i] if ins[pnt+i] < 32768 else self.reg[ins[pnt+i] % self.M] for i in range(num_read))
         pnt += num_read
+        self.pnt = pnt # needs to be updated for call to work
         if self.verbose: print(opcode, func.__name__, args)
         # optional: change pointer
         res = func(args)
@@ -174,15 +182,15 @@ class Comp():
         # print(opcode, args, func, numargs, pnt)
         return pnt
     
-    def run(self,pnt, amount=1000000000000000):
+    def run(self,amount=1000000000000000):
         for i in range(amount):
-            pnt = self.do_function(pnt)
-            if not pnt:
+            self.pnt = self.do_function(self.pnt)
+            if not self.pnt:
                 print('ending')
                 return
 
     
-c = Comp(ins,verbose=True)
-c.run(0, 1100)
+c = Comp(ins,verbose=False)
+c.run(110000)
 print('hi')
 # %%
