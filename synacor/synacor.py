@@ -2,10 +2,6 @@
 # To add a new markdown cell, type '# %% [markdown]'
 # %%
 from aoc_utils import *
-
-
-
-# %%
 import tarfile
 fname = 'synacor-challenge.tgz'
 if fname.endswith("tar.gz"):
@@ -18,7 +14,6 @@ tar.extractall()
 tar.close()
 
 
-# %%
 import numpy as np
 f = open('challenge.bin', 'rb')
 ins = np.fromfile(f, dtype=np.uint16)
@@ -26,14 +21,14 @@ ins = np.fromfile(f, dtype=np.uint16)
 
 # %%
 class Comp():
-    def __init__(self, ins):
+    def __init__(self, ins, verbose=False):
         self.pnt = 0
         self.ins = ins
         self.functions = {
             0 : (self.halt,0,0),
             1 : (self.set,1,1),
             2 : (self.push,0,1),
-            3 : (self.pop,0,1),
+            3 : (self.pop,1,0),
             4 : (self.eq,1,2),
             5 : (self.gt,1,2),
             6 : (self.jmp, 0,1),
@@ -55,6 +50,8 @@ class Comp():
         }
         self.M = 32768
         self.reg = {i:0 for i in range(8)}
+        self.stack = []
+        self.verbose = verbose
 
 
     def halt(self, args):
@@ -63,19 +60,25 @@ class Comp():
 
     def set(self, args):
         self.reg[args[0]] = args[1]
-        print(self.reg)
+        if self.verbose: print(f'reg {args[0]} is now {self.reg[args[0]]}')
+
 
     def push(self, args):
-        print('push not implemented')
-        sys.exit()
+        #   push <a> onto the stack
+        self.stack.append(args[0])
+        if self.verbose: print('new stack', self.stack)
 
     def pop(self, args):
-        print('pop not implemented')
-        sys.exit()
+        top = self.stack.pop()
+        self.reg[args[0]] = top
+        if self.verbose: print('new stack', self.stack)
+        
 
     def eq(self, args):
-        print('eq not implemented')
-        sys.exit()
+        #   set <a> to 1 if <b> is equal to <c>; set it to 0 otherwise
+        a,b,c = args
+        self.reg[a] = 1 if b == c else 0
+        if self.verbose: print(f'reg {a} is now {self.reg[a]}')
 
     def gt(self, args):
         print('gt not implemented')
@@ -93,8 +96,9 @@ class Comp():
             return args[1]
 
     def add(self, args):
-        register = args[0]
-        self.reg[register] = (args[1] + args[2]) % self.M
+        # assign into <a> the sum of <b> and <c> (modulo 32768)
+        a, b, c = args
+        self.reg[a] = (b + c) % self.M
 
     def mult(self, args):
         print('mult not implemented')
@@ -151,17 +155,17 @@ class Comp():
         if func == self.halt:
             return False
         # read arguments
-        print([ins[pnt+i] for i in range(num_write+num_read)])
+        if self.verbose: print([ins[pnt+i] for i in range(num_write+num_read)])
 
         args = tuple(ins[pnt+i] % self.M for i in range(num_write))
         pnt += num_write
         args += tuple(ins[pnt+i] if ins[pnt+i] < 32768 else self.reg[ins[pnt+i] % self.M] for i in range(num_read))
         pnt += num_read
-        print(opcode, func.__name__, args)
+        if self.verbose: print(opcode, func.__name__, args)
         # optional: change pointer
         res = func(args)
         if res: # could do this with walrus
-            print('result', res)
+            if self.verbose: print('result', res)
             pnt = res
         # print(opcode, args, func, numargs, pnt)
         return pnt
@@ -174,17 +178,7 @@ class Comp():
                 return
 
     
-c = Comp(ins)
+c = Comp(ins,verbose=True)
 c.run(0, 1100)
-
-
-# %%
-ins[:10]
-
-
-# %%
-c.jmp((347,))
-
-
-
+print('hi')
 # %%

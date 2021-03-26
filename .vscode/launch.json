@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "name": "Python: Huidige bestand",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "cwd": "./synacor"
+
+
+        }
+    ]
+}
