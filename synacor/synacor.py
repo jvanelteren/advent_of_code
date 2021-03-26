@@ -15,7 +15,9 @@ tar.close()
 
 
 import numpy as np
+
 # %%
+
 f = open('challenge.bin', 'rb')
 ins = np.fromfile(f, dtype=np.uint16)
 
@@ -62,7 +64,6 @@ class Comp():
         self.reg[args[0]] = args[1]
         if self.verbose: print(f'reg {args[0]} is now {self.reg[args[0]]}')
 
-
     def push(self, args):
         #   push <a> onto the stack
         self.stack.append(args[0])
@@ -72,7 +73,6 @@ class Comp():
         top = self.stack.pop()
         self.reg[args[0]] = top
         if self.verbose: print('new stack', self.stack)
-        
 
     def eq(self, args):
         #   set <a> to 1 if <b> is equal to <c>; set it to 0 otherwise
@@ -89,7 +89,7 @@ class Comp():
         return args[0]
 
     def jt(self, args):
-        if args[0]:
+        if args[0] != 0:
             return args[1]
 
     def jf(self, args):
@@ -114,12 +114,12 @@ class Comp():
     def func_and(self, args):
         # stores into <a> the bitwise and of <b> and <c>
         a, b, c = args
-        self.reg[a] = b & c
+        self.reg[a] = (b & c) % self.M
 
     def func_or(self, args):
         # stores into <a> the bitwise or of <b> and <c>
         a, b, c = args
-        self.reg[a] = b | c
+        self.reg[a] = (b | c) % self.M
 
     def func_not(self, args):
         # stores 15-bit bitwise inverse of <b> in <a>
@@ -130,24 +130,27 @@ class Comp():
         #   read memory at address <b> and write it to <a>
         a , b = args
         self.reg[a] = self.ins[b]
+        if self.verbose: print(f'written to reg {a} val {self.ins[b]} from pnt {b}')
 
     def wmem(self, args):
         #   write the value from <b> into memory at address <a>
         a , b = args
         self.ins[a] = b
+        if self.verbose: print(f'written {b} to address {a}')
 
-    def call(self, args):
+    def call(self, args): 
+        if self.verbose: print(self.pnt)
         self.stack.append(self.pnt)
         return args[0]
 
     def ret(self, args):
         # remove the top element from the stack and jump to it; empty stack = halt
+        if self.verbose: print('retting')
+        
         return self.stack.pop()
-
+        # sys.exit()
 
     def out(self,args):
-        print('out not implemented')
-        sys.exit()
         print(chr(args[0]), end='')
 
     def func_in(self, args):
@@ -158,39 +161,53 @@ class Comp():
         pass
 
 
-    def do_function(self, pnt):
+    def do_function(self):
         # read opcode
-        opcode = self.ins[pnt]
-        pnt += 1
+        if self.verbose: print('pointer', self.pnt, '\nregisters', self.reg, '\nstack', self.stack)
+        opcode = self.ins[self.pnt]
+        self.pnt += 1
         func, num_write, num_read = self.functions[opcode]
         if func == self.halt:
+            print('halting')
+            sys.exit()
             return False
         # read arguments
-        if self.verbose: print([ins[pnt+i] for i in range(num_write+num_read)])
+        if self.verbose: print('arguments from addresses',[self.ins[self.pnt+i] for i in range(num_write+num_read)])
 
-        args = tuple(ins[pnt+i] % self.M for i in range(num_write))
-        pnt += num_write
-        args += tuple(ins[pnt+i] if ins[pnt+i] < 32768 else self.reg[ins[pnt+i] % self.M] for i in range(num_read))
-        pnt += num_read
-        self.pnt = pnt # needs to be updated for call to work
-        if self.verbose: print(opcode, func.__name__, args)
+        args = tuple(self.ins[self.pnt+i] % self.M for i in range(num_write))
+        self.pnt += num_write
+        args += tuple(self.ins[self.pnt+i] if self.ins[self.pnt+i] < 32768 else self.reg[self.ins[self.pnt+i] % self.M] for i in range(num_read))
+        self.pnt += num_read
+        if self.verbose: print('................',func.__name__, args)
         # optional: change pointer
         res = func(args)
         if res: # could do this with walrus
-            if self.verbose: print('result', res)
-            pnt = res
+            if self.verbose: print('new pointer', res)
+            self.pnt = res
+        if res == 0:
+            print('res 0')
+            sys.exit()
         # print(opcode, args, func, numargs, pnt)
-        return pnt
+        return True
     
-    def run(self,amount=1000000000000000):
+    def run(self,amount=1000000):
         for i in range(amount):
-            self.pnt = self.do_function(self.pnt)
-            if not self.pnt:
+            if self.verbose: print('\n',i,self.pnt)
+            res = self.do_function()
+            if not res:
                 print('ending')
                 return
 
-    
 c = Comp(ins,verbose=False)
-c.run(110000)
+# c = Comp([9,32768,32769,4,19,32768],verbose=)
+c.run()
 print('hi')
+# %%
+for i,val in enumerate(c.ins):
+    if val != ins[i]:
+        print(i,val, ins[i])
+# %%
+
+# %%
+{i: val for i, val in enumerate(list(ins))}
 # %%
