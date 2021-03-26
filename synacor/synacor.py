@@ -14,9 +14,10 @@ tar.extractall()
 tar.close()
 
 
-import numpy as np
+
 
 # %%
+import numpy as np
 
 f = open('challenge.bin', 'rb')
 ins = np.fromfile(f, dtype=np.uint16)
@@ -164,6 +165,8 @@ class Comp():
     def do_function(self):
         # read opcode
         if self.verbose: print('pointer', self.pnt, '\nregisters', self.reg, '\nstack', self.stack)
+        # assert all(r < self.M for r in self.reg.values())
+        # assert all(r < self.M for r in self.stack)
         opcode = self.ins[self.pnt]
         self.pnt += 1
         func, num_write, num_read = self.functions[opcode]
@@ -198,16 +201,6 @@ class Comp():
                 print('ending')
                 return
 
-c = Comp(ins,verbose=False)
-# c = Comp([9,32768,32769,4,19,32768],verbose=)
+c = Comp({i:val for i, val in enumerate(list(ins))},verbose=False)
 c.run()
-print('hi')
-# %%
-for i,val in enumerate(c.ins):
-    if val != ins[i]:
-        print(i,val, ins[i])
-# %%
-
-# %%
-{i: val for i, val in enumerate(list(ins))}
 # %%
