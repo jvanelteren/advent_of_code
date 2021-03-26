@@ -30,37 +30,40 @@ class Comp():
         self.pnt = 0
         self.ins = ins
         self.functions = {
-            0 : (self.halt,0),
-            1 : (self.set,2),
-            2 : (self.push,1),
-            3 : (self.pop,1),
-            4 : (self.eq,3),
-            5 : (self.gt,3),
-            6 : (self.jmp, 1),
-            7 : (self.jt, 2),
-            8 : (self.jf, 2),
-            9 : (self.add, 3),
-            10 : (self.mult, 3),
-            11 : (self.mod, 3),
-            12: (self.func_and, 3),
-            13 : (self.func_or, 3),
-            14 : (self.func_not, 2),
-            15 : (self.rmem, 2),
-            16 : (self.wmem, 2),
-            17 : (self.call, 1),
-            18 : (self.ret, 18),
-            19: (self.out,1),
-            20: (self.func_in,1),
-            21: (self.noop,0),
+            0 : (self.halt,0,0),
+            1 : (self.set,1,1),
+            2 : (self.push,0,1),
+            3 : (self.pop,0,1),
+            4 : (self.eq,1,2),
+            5 : (self.gt,1,2),
+            6 : (self.jmp, 0,1),
+            7 : (self.jt, 0,2),
+            8 : (self.jf, 0,2),
+            9 : (self.add, 1,2),
+            10 : (self.mult, 1,2),
+            11 : (self.mod, 1,2),
+            12: (self.func_and, 1,2),
+            13 : (self.func_or, 1,2),
+            14 : (self.func_not, 1,1),
+            15 : (self.rmem, 1,1),
+            16 : (self.wmem, 1,1),
+            17 : (self.call, 0,1),
+            18 : (self.ret, 0,0),
+            19: (self.out,0,1),
+            20: (self.func_in,0,1),
+            21: (self.noop,0,0),
         }
+        self.M = 32768
+        self.reg = {i:0 for i in range(8)}
+
 
     def halt(self, args):
         #should not be called
         sys.exit()
 
     def set(self, args):
-        print('set not implemented')
-        sys.exit()
+        self.reg[args[0]] = args[1]
+        print(self.reg)
 
     def push(self, args):
         print('push not implemented')
@@ -82,16 +85,16 @@ class Comp():
         return args[0]
 
     def jt(self, args):
-        print('jt not implemented')
-        sys.exit()
-        
+        if args[0]:
+            return args[1]
+
     def jf(self, args):
-        print('jf not implemented')
-        sys.exit()
-        
+        if args[0] == 0:
+            return args[1]
+
     def add(self, args):
-        print('add not implemented')
-        sys.exit()
+        register = args[0]
+        self.reg[register] = (args[1] + args[2]) % self.M
 
     def mult(self, args):
         print('mult not implemented')
@@ -144,15 +147,21 @@ class Comp():
         # read opcode
         opcode = self.ins[pnt]
         pnt += 1
-        func, numargs = self.functions[opcode]
+        func, num_write, num_read = self.functions[opcode]
         if func == self.halt:
             return False
         # read arguments
-        args = tuple(ins[pnt+i] for i in range(numargs))
-        pnt += numargs
+        print([ins[pnt+i] for i in range(num_write+num_read)])
+
+        args = tuple(ins[pnt+i] % self.M for i in range(num_write))
+        pnt += num_write
+        args += tuple(ins[pnt+i] if ins[pnt+i] < 32768 else self.reg[ins[pnt+i] % self.M] for i in range(num_read))
+        pnt += num_read
+        print(opcode, func.__name__, args)
         # optional: change pointer
         res = func(args)
         if res: # could do this with walrus
+            print('result', res)
             pnt = res
         # print(opcode, args, func, numargs, pnt)
         return pnt
@@ -174,6 +183,8 @@ ins[:10]
 
 
 # %%
+c.jmp((347,))
 
 
 
+# %%
