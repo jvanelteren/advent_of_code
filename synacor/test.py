@@ -149,7 +149,7 @@ ones = 2
 ones + magic*num + num
 
 # %%
-[k for k, v in results.items() if (v + k )%M == 5]
+[k for k, v in results.items() if (v + k ) % M == 5]
 
 # %%
 
