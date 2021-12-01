@@ -55,3 +55,24 @@ for i in range(10000000):
 H[1].right.num * H[1].right.right.num
 
 # %%
+code = "916438275"
+code =  [int(ch) for ch in code]
+class Node():
+    def __init__(self, num):
+        self.num = num
+        self.right = None
+
+    def __repr__(self):
+        return f'value {self.num} right {self.right.num}\n'
+
+total = list(code) + list(range(10, 1001))
+nodes = {n: Node(n) for n in total}
+for i,j in zip(total, total[1:]+total[:1]):
+    nodes[i].right = nodes[j]
+# %%
+cur = nodes[1]
+nodes
+
+# %%
+nodes[1]
+# %%

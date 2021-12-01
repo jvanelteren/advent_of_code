@@ -56,13 +56,12 @@ class NicComputer(Computer):
             del self.input[0]
         elif not self.queue.empty():
             toass = self.queue.get()
+            # print('read'+str(c.id), toass)
             self.input= toass
-            # print('assigning queueu',toass,len(self.input))
         elif self.input[0] != -1:
             del self.input[0]
             return 'pauze'
         else:
-            # print('should not happen') 
             del self.input[0]
             return 'pauze'
 #dont know if memory is a deep copy
@@ -75,6 +74,8 @@ for c in nw:
 nat = 'init'
 resy = 99999
 # all([not c.running for c in nw])
+totalwrite = 0
+totalread=0
 while True:
     if all([c.queue.empty() for c in nw]) and nat != 'init' and all([not c.input for c in nw]) and all([not c.running for c in nw]):
         print('nat',nat)
@@ -96,8 +97,9 @@ while True:
                     c.input=[-1]
                 else:
                     toass = c.queue.get()
+                    # print('read'+str(c.id), toass)
+                    totalread += 1
                     c.input= toass
-                    # print('assigning queueu',toass,len(c.input))
             in0 = c.runwait()
             if in0 and in0!='pauze':
                 in1 = c.runwait()
@@ -105,13 +107,17 @@ while True:
                 # print((in0,in1,in2))
                 
                 if in0 == 255:
-                    # print('found 255',in1,'y',in2)
+                    # print('found 255',c.id, in1,'y',in2)
                     nat = [in1,in2]
                 else:
+                    if in0==15:
+                        print(' 15 add',in1,in2)
                     nw[in0].queue.put([in1,in2])
-
-
-
+                    # print('sending'+str(c.id), (in0,in1,in2))
+                    totalwrite+=1
+                    # print('totalwrite', totalwrite)
+                    
+#%%
+        
 
 # %%
-# 24922 hig
