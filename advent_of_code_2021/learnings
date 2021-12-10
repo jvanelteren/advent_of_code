@@ -1,0 +1,35 @@
+      -------Part 1--------   -------Part 2--------
+Day       Time  Rank  Score       Time  Rank  Score
+ 10   00:09:25  1362      0   00:21:50  2117      0
+  9   00:06:35   628      0   00:45:58  3590      0
+  8   00:07:54  1054      0   00:27:10   313      0
+  7   00:03:51   782      0   00:15:34  3726      0
+  6   00:11:25  3745      0   00:11:43   710      0
+  5   00:07:59   371      0   00:19:22   883      0
+  4   00:18:37  1062      0   00:23:16   893      0
+  3   00:04:47   447      0   00:24:15  1541      0
+  2   00:02:55   909      0   00:04:44   728      0
+  1   00:01:39   387      0   00:11:21  2863      0
+
+
+
+High scores:
+  Day 1: Good brute force
+  Day 3: Good naming and use of str.count
+  Day 5: Good if-else tree coding
+  Day 8: Good problem-solving (deduction)
+
+
+To improve
+  Day 1:  Didn't read well, indexing off by 1
+  Day 3:  Coding logic in if else tree
+  Day 6:  Misread example (thought answer should be 18 where it said 26)
+  Day 7:  Used unclear variable best instead of ans and printed new instead of ans at end
+  Day 9:  Used unclear variables mixing up i,j and r,c. Also repeated logic instead of naming it to an intermediate variable
+  Day 10: Didn't start each line with an empty list (declared stack at beginning only once). Funnily this passed p1
+
+
+
+Todo:
+Day 8 brute force
+numpy https://www.reddit.com/r/adventofcode/comments/rcjgu6/despite_having_used_python_for_years_today_was/
