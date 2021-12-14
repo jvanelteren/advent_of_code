@@ -1,3 +1,5 @@
+NNCB
+
 CH -> B
 HH -> N
 CB -> H
