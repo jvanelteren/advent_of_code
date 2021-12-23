@@ -1,0 +1,6 @@
+register 1 is b
+register 2 is c
+
+jie a 2
+jmp a
+jmp a 3
