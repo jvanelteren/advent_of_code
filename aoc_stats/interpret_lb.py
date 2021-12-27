@@ -4,9 +4,11 @@
 import pandas as pd
 import database as db
 import sqlite3
+from pprint import pprint
+
 conn = db.open_db('scores.db')
 
-# %%
+
 sql = """
     SELECT user, SUM(points) 
     FROM scores 
@@ -22,8 +24,9 @@ db.do_df(conn,sql)
 
 # %%
 sql = """
-    SELECT *
-    FROM scores
+    SELECT DISTINCT year
+    FROM finishers
+    LIMIT 10
 """
 scores = db.do_df(conn,sql)
 scores.head()
@@ -34,7 +37,6 @@ scores.head()
 # %%
 
 #%%
-from pprint import pprint
 sql = """
     SELECT f1.year, f1.day, 
         ROUND(CAST(f1.both as real) / f2.both, 2) AS perc_of_previous, 

@@ -3,13 +3,13 @@
 import numpy as np
 import altair as alt
 import pandas as pd
-
+import database as db
 # The display part needs two files: scores_leaderboard_YEAR.txt and scores_personal_YEAR.txt which you need to make yourself
 YEAR = 2017 # adapt to the year you're competing
 
-f= open('personal_scores/scores_personal_'+str(YEAR)+'.txt','r')
+f = open('personal_scores/scores_personal_'+str(YEAR)+'.txt','r')
 scores = [line.rstrip().split(',') for line in f]
-f= open('global_scores/scores_leaderboard_'+str(YEAR)+'.txt','r')
+f = open('global_scores/scores_leaderboard_'+str(YEAR)+'.txt','r')
 leaderboard_scores = [line.rstrip().split(',') for line in f]
 
 # first puzzle time is field 1

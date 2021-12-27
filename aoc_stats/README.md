@@ -9,7 +9,7 @@ But if you like the competitive side of things, just do this:
 2) Fill your scores in scores_personal_YEAR.txt, where YEAR is the year you are competing
    The format is DAY, TIME TO STAR 1, TIME TO BOTH STARS. The times are in minutes.
 
-3) (Only needed if the global scores text file is not in the global_scores directory). Adjust the year in download_leaderboard.py and run it
+3) (Only needed if the global scores text file is not in the global_scores directory). Adjust the year in populate_db_with_results.py and run it
 
 4) Adjust the year in interpret_scores.py and run it. You do need to have numpy, pandas and altair installed (pip install ...)
 
