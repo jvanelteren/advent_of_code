@@ -20,7 +20,7 @@ def create_table(conn, create_table_sql):
         print(e)
 
 def insert_scores(conn, scores):
-    sql = """ INSERT OR IGNORE INTO scores (year, day, star, position, time, user, aocplus)
+    sql = """ INSERT OR IGNORE INTO scores (year, day, star, position, points, time, user, aocplus)
               VALUES(?,?,?,?,?,?,?) """
     cur = conn.cursor()
     cur.executemany(sql,scores)
@@ -65,6 +65,7 @@ def open_db(name):
                                         "day" INTEGER,
                                         "star" INTEGER,
                                         "position" INTEGER,
+                                        "points" INTEGER,
                                         "time" INTEGER,
                                         "user" VARCHAR(100),
                                         "aocplus" VARCHAR(100),

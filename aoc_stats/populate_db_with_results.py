@@ -30,11 +30,12 @@ def parse(year, day, webpage):
         res = [p.text for p in part.descendants
                     if p.text and p.text not in ['None',' ']]
         place = int(res[0][:-1])
+        points = 100 - place + 1
         timestamp = re.findall(r'(\d\d)',res[2])
         timestamp = int(timestamp[1])*3600 + int(timestamp[2])*60 + int(timestamp[3])
         user = res[4]
         aocplus = True if '(AoC++)' in res else False
-        leaderboard.append((year, day, star, place, timestamp, user, aocplus))
+        leaderboard.append((year, day, star, place, points, timestamp, user, aocplus))
         if place == 100: star = 1
     return leaderboard
 
@@ -42,7 +43,7 @@ def parse(year, day, webpage):
 def add_daily_lb_to_db(year, conn):
     for day in range(1,26):
         scores = getfile(year,day)
-        db.insert_scores(conn, parse(year, day + 1, scores))
+        db.insert_scores(conn, parse(year, day, scores))
         
 # %%
 # to add the stats to the DB
@@ -108,6 +109,8 @@ def parse_personal_scores(conn):
                 db.insert_personal_scores(conn, scores)
                 
 
+# conn = db.open_db('aoc_stats/aoc.db')
+# db.del_all_records(conn)
 conn = db.open_db('aoc_stats/aoc.db')
 db.do(conn, "DROP TABLE IF EXISTS personal")
 conn = db.open_db('aoc_stats/aoc.db')
@@ -121,3 +124,4 @@ for y in scrape_years:
 
 conn = db.open_db('aoc_stats/aoc.db')
 print(db.len(conn, 'scores'), db.len(conn, 'finishers'), db.len(conn, 'personal'))
+# %%

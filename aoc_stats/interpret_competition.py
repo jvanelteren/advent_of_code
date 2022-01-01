@@ -1,4 +1,6 @@
 #%%
+import database as db
+conn = db.open_db('aoc.db')
 sql = """
 WITH year_scores AS (
     SELECT year, user, SUM(points) as total
