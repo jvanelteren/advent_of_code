@@ -94,7 +94,7 @@ def parse_times_excl_position(content, year):
     return scores
 
 def parse_personal_scores(conn):
-        for x in Path('aoc_stats/global_scores').iterdir():
+        for x in Path('aoc_stats/personal_scores').iterdir():
             with open(x, 'r') as f:
                 content = f.read()
                 year = int(x.name[19:-4])
@@ -109,12 +109,13 @@ def parse_personal_scores(conn):
                 db.insert_personal_scores(conn, scores)
                 
 
-# conn = db.open_db('aoc_stats/aoc.db')
-# db.del_all_records(conn)
+# this drops the personal scores and reloads them from text files
 conn = db.open_db('aoc_stats/aoc.db')
 db.do(conn, "DROP TABLE IF EXISTS personal")
 conn = db.open_db('aoc_stats/aoc.db')
 parse_personal_scores(conn)
+
+# enter a year if you need to add new global scores to db
 scrape_years = []
 for y in scrape_years:
     add_daily_lb_to_db(y, conn)
@@ -124,4 +125,3 @@ for y in scrape_years:
 
 conn = db.open_db('aoc_stats/aoc.db')
 print(db.len(conn, 'scores'), db.len(conn, 'finishers'), db.len(conn, 'personal'))
-# %%

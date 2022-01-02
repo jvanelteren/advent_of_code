@@ -4,17 +4,13 @@ This small project is meant for when you are doing past years of Advent of Code 
 
 But if you like the competitive side of things, just do this:
 
-1) Mark your start time when you start the puzzle, just on a piece of paper. Make sure to note the time again when you finish part 1 and part 2. Then calculate the time to star 1 and both stars in your personal file:
+1) Put your personal scores in the personal_scores map. You have two options: 
+  a) If you competed during the year: Copy the stats from your [personal stats page](https://adventofcode.com/2021/leaderboard/self), starting from the line with ---Part 1 on it
+  b) If you didn't compete during the year. Mark your start time when you start the puzzle, just on a piece of paper. Make sure to note the time again when you finish part 1 and part 2. Then calculate the time to star 1 and both stars in your personal file. The format is DAY, TIME TO STAR 1, TIME TO BOTH STARS. The times are in minutes.
+There are example files in the personal_scores map
 
-2) Fill your scores in scores_personal_YEAR.txt, where YEAR is the year you are competing
-   The format is DAY, TIME TO STAR 1, TIME TO BOTH STARS. The times are in minutes.
+3) (Optional if you want to add seasons after 2021). Adjust the year in populate_db_with_results.py and run it. It will populate the db with your personal scores
 
-3) (Only needed if the global scores text file is not in the global_scores directory). Adjust the year in populate_db_with_results.py and run it
-
-4) Adjust the year in interpret_scores.py and run it. You do need to have numpy, pandas and altair installed (pip install ...)
-
-5) A chart.html file will be generated plotting your scores vs the LB
-
-6) Open the html file and see your performance
+4) Play around with both analysis notebooks
 
 Hope you enjoy it! Jesse
