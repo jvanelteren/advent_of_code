@@ -2,6 +2,10 @@
 Day       Time  Rank  Score       Time  Rank  Score
 
 
+I like unpacking with *. You can unpack a set as well:
+a, = set('A)
+a == 'A'
+
 
 High scores:
   
@@ -11,6 +15,6 @@ Well done:
 
 
 To improve:
-  
-
+3) Doing all parts of the assignment: Forgot to divide a string length by 2
+4) Ranges suck. Something with the pressure at 6:00?
 Todo
