@@ -4,5 +4,10 @@
 **./input.txt
 **./**/.input.txt
 **/**/input.txt
+./in.txt
+.in.txt
+**./in.txt
+**./**/.in.txt
+**/**/in.txt
 .aocenv
 .aocenvpy311
