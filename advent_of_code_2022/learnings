@@ -6,6 +6,7 @@ I like unpacking with *. You can unpack a set as well:
 a, = set('A)
 a == 'A'
 
+Frozenset can be intersected and unioned etc, will produce new frozenset
 
 High scores:
   
