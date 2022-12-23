@@ -13,11 +13,19 @@ from pathlib import Path
 # This file scrapes the website for the leaderboard times
 # It's not necessary to run it <2022, since these files are already included
 # Make sure to run this file only once, it will take about the minute (waits 2 seconds between requests)
-
+HEADERS = {
+    "User-Agent": (
+        f"https://github.com/jvanelteren/advent_of_code/tree/main/aoc_stats"
+        " contact: Reddit u/asgardian28 Thanks for AoC Eric. Im scraping this once per year"
+    )
+}
 # to add lb scores to db
 def getfile(YEAR,day):
     url = 'https://adventofcode.com/'+str(YEAR)+'/leaderboard/day/'+str(day)
-    r = requests.get(url)
+    r = requests.get(url, headers=HEADERS)
+    
+    
+    
     time.sleep(2)
     print(f'downloaded {YEAR} day {day}')
     return r.content.decode('utf-8')
