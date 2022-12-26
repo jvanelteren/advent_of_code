@@ -21,7 +21,7 @@ def create_table(conn, create_table_sql):
 
 def insert_scores(conn, scores):
     sql = """ INSERT OR IGNORE INTO scores (year, day, star, position, points, time, user, aocplus)
-              VALUES(?,?,?,?,?,?,?) """
+              VALUES(?,?,?,?,?,?,?,?) """
     cur = conn.cursor()
     cur.executemany(sql,scores)
     print(f'{cur.rowcount} items inserted')
@@ -117,7 +117,7 @@ def do_df(conn, ins):
 #%%
 conn = open_db('aoc.db')
 # #%%
-first(conn, 'personal')
+print(first(conn, 'personal'))
 # del_all_records(conn)
 
 

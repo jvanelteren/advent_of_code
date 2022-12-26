@@ -90,6 +90,7 @@ def parse_times_incl_position(content, year):
             day, timestamp1, place1, score1, timestamp2, place2, score2 = line
             scores.append((year, day, 1, place1, timestamp2int(timestamp1)))
             scores.append((year, day, 2, place2, timestamp2int(timestamp2)))
+    print(scores, year)
     return scores
 
 def parse_times_excl_position(content, year):
@@ -102,33 +103,36 @@ def parse_times_excl_position(content, year):
     return scores
 
 def parse_personal_scores(conn):
-        for x in Path('aoc_stats/personal_scores').iterdir():
-            with open(x, 'r') as f:
-                content = f.read()
-                year = int(x.name[19:-4])
-                if '-------Part 1--------' in content:
-                    # competed this year for position, aoc website page such as:
-                    # https://adventofcode.com/2021/leaderboard/self
-                    scores = parse_times_incl_position(content, year)
-                else:
-                    # didnt compete for position but for time. Format:
-                    # day, timepart1, timepart1and2
-                    scores = parse_times_excl_position(content, year)
-                db.insert_personal_scores(conn, scores)
+    for x in Path('aoc_stats/personal_scores').iterdir():
+        with open(x, 'r') as f:
+            content = f.read()
+            year = int(x.name[19:-4])
+            if '-------Part 1--------' in content:
+                print(year)
+                # competed this year for position, aoc website page such as:
+                # https://adventofcode.com/2021/leaderboard/self
+                scores = parse_times_incl_position(content, year)
+            else:
+                # didnt compete for position but for time. Format:
+                # day, timepart1, timepart1and2
+                scores = parse_times_excl_position(content, year)
+            db.insert_personal_scores(conn, scores)
                 
 
 # this drops the personal scores and reloads them from text files
 conn = db.open_db('aoc_stats/aoc.db')
 db.do(conn, "DROP TABLE IF EXISTS personal")
+# db.do(conn, "DROP TABLE IF EXISTS finishers")
 conn = db.open_db('aoc_stats/aoc.db')
 parse_personal_scores(conn)
 
 # enter a year if you need to add new global scores to db
 scrape_years = []
+scrape_years = range(2022, 2023)
 for y in scrape_years:
     add_daily_lb_to_db(y, conn)
     print(f'items in db after adding year {y}:', db.len(conn, 'scores'))
-    add_year_stats_to_db(y, conn)
+    # add_year_stats_to_db(y, conn)
     print(f'items in db after adding year {y}:', db.len(conn, 'finishers'))
 
 conn = db.open_db('aoc_stats/aoc.db')
