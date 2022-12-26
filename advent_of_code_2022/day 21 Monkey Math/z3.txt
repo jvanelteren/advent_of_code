@@ -2515,5 +2515,5 @@ grgq: zldd * vtvh
 lsrv: 2
 wrfm: 2
 zdsc: zmcd * qjlg
-humn: 3342154812538
-root: qhbp + vglr
+qhbp: vglr
+humn: humn
