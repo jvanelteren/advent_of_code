@@ -102,17 +102,23 @@ def open_db(name):
     return conn
 
 def do(conn, ins):
-    return conn.cursor().execute(ins).fetchall()
+    cur =  conn.cursor()
+    res = cur.execute(ins).fetchall()
+    cur.close()
+    return res
 
 def do_special(conn, ins):
     cur = conn.cursor()
     cur.execute(ins)
     conn.commit()
+    cur.close()
     
 def do_df(conn, ins):
     cur = conn.cursor().execute(ins)
     col_name_list = [tuple[0] for tuple in cur.description]
-    return pd.DataFrame(cur.fetchall(), columns=col_name_list)
+    res = pd.DataFrame(cur.fetchall(), columns=col_name_list)
+    cur.close()
+    return res
 
 #%%
 conn = open_db('aoc.db')

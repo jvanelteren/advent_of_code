@@ -122,17 +122,17 @@ def parse_personal_scores(conn):
 # this drops the personal scores and reloads them from text files
 conn = db.open_db('aoc_stats/aoc.db')
 db.do(conn, "DROP TABLE IF EXISTS personal")
-# db.do(conn, "DROP TABLE IF EXISTS finishers")
+db.do(conn, "DROP TABLE IF EXISTS finishers")
 conn = db.open_db('aoc_stats/aoc.db')
 parse_personal_scores(conn)
 
 # enter a year if you need to add new global scores to db
 scrape_years = []
-scrape_years = range(2022, 2023)
+scrape_years = range(2015, 2023)
 for y in scrape_years:
-    add_daily_lb_to_db(y, conn)
+    # add_daily_lb_to_db(y, conn)
     print(f'items in db after adding year {y}:', db.len(conn, 'scores'))
-    # add_year_stats_to_db(y, conn)
+    add_year_stats_to_db(y, conn)
     print(f'items in db after adding year {y}:', db.len(conn, 'finishers'))
 
 conn = db.open_db('aoc_stats/aoc.db')
