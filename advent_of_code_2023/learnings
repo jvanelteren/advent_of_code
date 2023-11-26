@@ -1,0 +1,29 @@
+      -------Part 1--------   -------Part 2--------
+Day       Time  Rank  Score       Time  Rank  Score
+
+
+I like unpacking with *. You can unpack a set as well:
+a, = set('A)
+a == 'A'
+
+Frozenset can be intersected and unioned etc, will produce new frozenset
+
+High scores:
+  
+Well done:
+1) Code with some more lines if you're sure that will work instead of using a 'nice language feature' you don't fully understand
+2) Hardcoding with if statements if simply sometimes the best
+
+
+To improve:
+3) Doing all parts of the assignment: Forgot to divide a string length by 2
+4) Ranges suck. Something with the pressure at 6:00?
+5) Forgot about list('ABDC') is an option instead of ['A', 'B', 'C']
+7)efaultdict can change size during iteration while looking up values that dont exist
+16) when you use an index to count how many items of an iterator you have consumed, make sure to increase it when you consume. I only did it per falling tetris stone, but not how often the wind blowes
+
+Todo
+
+
+revisit day 19
+look at how python solvers work such as sympy
