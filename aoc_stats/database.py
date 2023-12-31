@@ -4,6 +4,8 @@ from sqlite3 import Error
 import pandas as pd
 
 def create_con(db_file):
+    import os
+    print(os.getcwd(), db_file)
     conn = None
     try:
         conn = sqlite3.connect(db_file)
@@ -121,9 +123,9 @@ def do_df(conn, ins):
     return res
 
 #%%
-conn = open_db('aoc.db')
-# #%%
-print(first(conn, 'personal'))
+# conn = open_db('aoc.db')
+# # #%%
+# print(first(conn, 'personal'))
 # del_all_records(conn)
 
 

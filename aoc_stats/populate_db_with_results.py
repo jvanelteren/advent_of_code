@@ -1,4 +1,3 @@
-
 # %%
 # scrape AoC for leaderboard information
 import requests
@@ -47,12 +46,11 @@ def parse(year, day, webpage):
         if place == 100: star = 1
     return leaderboard
 
-# YEAR = 2015 # adapt to the year you're competing
+YEAR = 2023 # adapt to the year you're competing
 def add_daily_lb_to_db(year, conn):
     for day in range(1,26):
         scores = getfile(year,day)
         db.insert_scores(conn, parse(year, day, scores))
-        
 # %%
 # to add the stats to the DB
 def getstats(YEAR):
@@ -103,7 +101,7 @@ def parse_times_excl_position(content, year):
     return scores
 
 def parse_personal_scores(conn):
-    for x in Path('aoc_stats/personal_scores').iterdir():
+    for x in Path('personal_scores').iterdir():
         with open(x, 'r') as f:
             content = f.read()
             year = int(x.name[19:-4])
@@ -120,20 +118,21 @@ def parse_personal_scores(conn):
                 
 
 # this drops the personal scores and reloads them from text files
-conn = db.open_db('aoc_stats/aoc.db')
+conn = db.open_db('aoc.db')
 db.do(conn, "DROP TABLE IF EXISTS personal")
 db.do(conn, "DROP TABLE IF EXISTS finishers")
-conn = db.open_db('aoc_stats/aoc.db')
+conn = db.open_db('aoc.db')
 parse_personal_scores(conn)
 
 # enter a year if you need to add new global scores to db
-scrape_years = []
-scrape_years = range(2015, 2023)
+# scrape_years = [2023]
+scrape_years = range(2015, 2024)
 for y in scrape_years:
     # add_daily_lb_to_db(y, conn)
     print(f'items in db after adding year {y}:', db.len(conn, 'scores'))
     add_year_stats_to_db(y, conn)
     print(f'items in db after adding year {y}:', db.len(conn, 'finishers'))
 
-conn = db.open_db('aoc_stats/aoc.db')
+conn = db.open_db('aoc.db')
 print(db.len(conn, 'scores'), db.len(conn, 'finishers'), db.len(conn, 'personal'))
+# %%
