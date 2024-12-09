@@ -2,3 +2,4 @@
 day 2 think carefully whether to use break or continue
 day 3 don't split the input with .split('\n') and only use the first part if there are newlines in the input
 day 3 apply regex
+day 8 take time to write the logic down with paper and good variable names
