@@ -4,6 +4,8 @@ day 3 don't split the input with .split('\n') and only use the first part if the
 day 3 apply regex
 day 8 take time to write the logic down with paper and good variable names
 day 18 a for loop doesnt include the last number :) otherwise would have been quick
+day 20 if you set walls to open, make sure you close them 
+
 
 baba is you implementeren
 improve day 16
