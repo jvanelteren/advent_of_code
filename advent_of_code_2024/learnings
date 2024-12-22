@@ -9,4 +9,6 @@ day 20 if you set walls to open, make sure you close them
 
 baba is you implementeren
 improve day 16
-DAY 21 DP?! SEND HELP! :p
+DAY 21 Don't rely on a function you don't fully understand. It will lead to a lot of hassle
+
+DAY 21 Invest some time into thinking how you want to represent a state. E.g NESW were not really good for day 21. Better was <>^v to help with debugging
