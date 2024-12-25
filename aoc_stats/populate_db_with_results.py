@@ -126,7 +126,7 @@ parse_personal_scores(conn)
 
 # enter a year if you need to add new global scores to db
 # scrape_years = [2023]
-scrape_years = range(2015, 2024)
+scrape_years = range(2015, 2025)
 for y in scrape_years:
     # add_daily_lb_to_db(y, conn)
     print(f'items in db after adding year {y}:', db.len(conn, 'scores'))
